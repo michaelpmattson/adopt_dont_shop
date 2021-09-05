@@ -15,7 +15,7 @@ RSpec.describe Shelter, type: :model do
   before(:each) do
     @shelter_1 = Shelter.create(name: 'Aurora shelter', city: 'Aurora, CO', foster_program: false, rank: 9)
     @shelter_2 = Shelter.create(name: 'RGV animal shelter', city: 'Harlingen, TX', foster_program: false, rank: 5)
-    @shelter_3 = Shelter.create(name: 'Fancy pets of Colorado', city: 'Denver, CO', foster_program: true, rank: 10)
+    @shelter_3 = Shelter.create(name: 'fancy pets of Colorado', city: 'Denver, CO', foster_program: true, rank: 10)
 
     @pet_1 = @shelter_1.pets.create(name: 'Mr. Pirate', breed: 'tuxedo shorthair', age: 5, adoptable: false)
     @pet_2 = @shelter_1.pets.create(name: 'Clawdia', breed: 'shorthair', age: 3, adoptable: true)
@@ -39,6 +39,30 @@ RSpec.describe Shelter, type: :model do
     describe '#order_by_number_of_pets' do
       it 'orders the shelters by number of pets they have, descending' do
         expect(Shelter.order_by_number_of_pets).to eq([@shelter_1, @shelter_3, @shelter_2])
+      end
+    end
+
+    describe '#reverse_alpha_sort' do
+      it 'returns all shelters in reverse alphabetical order, case insensitive' do
+        expect(Shelter.reverse_alpha_sort).to eq([@shelter_2, @shelter_3, @shelter_1])
+      end
+    end
+
+    describe '#pending_shelters' do
+      it 'returns all shelters with pending apps' do
+        app_1 = Application.create!(name: "Cindy Lou Who", address: "123 Some Street", city: "Whoville", state: "WI", zip: "12345", description: "I'm a who for crying out loud.")
+        app_2 = Application.create!(name: "The Grinch", address: "2376 Mountaintop Drive", city: "Whoville", state: "WI", zip: "12345")
+
+        app_1.pets << @pet_1
+        app_2.pets << @pet_3
+
+        expect(Shelter.pending_shelters).to eq([])
+
+        app_1.update(status: "Pending")
+        expect(Shelter.pending_shelters).to eq([@shelter_1])
+
+        app_2.update(status: "Pending")
+        expect(Shelter.pending_shelters).to eq([@shelter_1, @shelter_3])
       end
     end
   end
