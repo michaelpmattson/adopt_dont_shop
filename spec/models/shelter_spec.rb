@@ -47,6 +47,24 @@ RSpec.describe Shelter, type: :model do
         expect(Shelter.reverse_alpha_sort).to eq([@shelter_2, @shelter_3, @shelter_1])
       end
     end
+
+    describe '#pending_shelters' do
+      it 'returns all shelters with pending apps' do
+        app_1 = Application.create!(name: "Cindy Lou Who", address: "123 Some Street", city: "Whoville", state: "WI", zip: "12345", description: "I'm a who for crying out loud.")
+        app_2 = Application.create!(name: "The Grinch", address: "2376 Mountaintop Drive", city: "Whoville", state: "WI", zip: "12345")
+
+        app_1.pets << @pet_1
+        app_2.pets << @pet_3
+
+        expect(Shelter.pending_shelters).to eq([])
+
+        app_1.update(status: "Pending")
+        expect(Shelter.pending_shelters).to eq([@shelter_1])
+
+        app_2.update(status: "Pending")
+        expect(Shelter.pending_shelters).to eq([@shelter_1, @shelter_3])
+      end
+    end
   end
 
   describe 'instance methods' do
