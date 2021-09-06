@@ -153,4 +153,25 @@ RSpec.describe 'the admin applications show page' do
       expect(page).to     have_content("Adoptable: false")
     end
   end
+
+  context 'when a pet has an approved and pending app' do
+    it 'removes the approve button for the pet on the pending app' do
+      visit "/admin/applications/#{@app_1.id}"
+
+      within "#pet-#{@pet_1.id}" do
+        click_button("Approve")
+      end
+      within "#pet-#{@pet_4.id}" do
+        click_button("Approve")
+      end
+
+      visit "/admin/applications/#{@app_2.id}"
+save_and_open_page
+      within "#pet-#{@pet_1.id}" do
+        expect(page).to_not have_button("Approve")
+        expect(page).to     have_button("Reject")
+        expect(page).to     have_content("This pet is already approved for adoption")
+      end
+    end
+  end
 end

@@ -40,5 +40,18 @@ RSpec.describe Pet, type: :model do
         expect(@pet_3.shelter_name).to eq(@shelter_1.name)
       end
     end
+
+    describe '#approved_app?' do
+      it 'confirms if pet has approved apps' do
+        app_1 = Application.create!(name: "Cindy Lou Who", address: "123 Some Street", city: "Chicago", state: "IL", zip: "12345", description: "I'm a who for crying out loud.")
+        app_1.pets << @pet_1
+
+        expect(@pet_1.approved_app?).to eq(false)
+
+        app_1.update(status: "Approved")
+
+        expect(@pet_1.approved_app?).to eq(true)
+      end
+    end
   end
 end
