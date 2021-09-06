@@ -18,7 +18,11 @@
       <% elsif app_pet.application_id == @application.id && app_pet.status == "Rejected" %>
         <p>Rejected</p>
       <% elsif app_pet.application_id == @application.id %>
-        <%= button_to "Approve", "/admin/applications/#{@application.id}", params: {pet_id: pet.id, approved: true}, method: :patch %>
+        <% if pet.approved_app? %>
+          <p>This pet is already approved for adoption</p>
+        <% else %>
+          <%= button_to "Approve", "/admin/applications/#{@application.id}", params: {pet_id: pet.id, approved: true}, method: :patch %>
+        <% end %>
         <%= button_to "Reject", "/admin/applications/#{@application.id}", params: {pet_id: pet.id, approved: false}, method: :patch %>
       <% end %>
     <% end %>

@@ -12,4 +12,11 @@ class Pet < ApplicationRecord
   def self.adoptable
     where(adoptable: true)
   end
+
+  def approved_app?
+    applications.reload
+    applications.any? do |application|
+      application.status == "Approved"
+    end
+  end
 end
