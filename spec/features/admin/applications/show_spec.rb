@@ -131,7 +131,6 @@ RSpec.describe 'the admin applications show page' do
   context 'when all pets on an app are approved' do
     it 'makes those pets not adoptable on their show pages' do
       visit "/pets/#{@pet_1.id}"
-      save_and_open_page
       expect(page).to have_content("Adoptable: true")
       visit "/pets/#{@pet_4.id}"
       expect(page).to have_content("Adoptable: true")
