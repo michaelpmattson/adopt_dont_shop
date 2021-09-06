@@ -22,4 +22,11 @@ class Application < ApplicationRecord
       application_pet.status == "Accepted"
     end
   end
+
+  def any_rejected?
+    application_pets.reload
+    application_pets.any? do |application_pet|
+      application_pet.status == "Rejected"
+    end
+  end
 end

@@ -16,6 +16,8 @@ class Admin::ApplicationsController < ApplicationController
 
     if application.all_accepted?
       application.update(status: "Approved")
+    elsif application.any_rejected?
+      application.update(status: "Rejected")
     end
 
     redirect_to("/admin/applications/#{application.id}")
