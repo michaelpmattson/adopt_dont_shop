@@ -15,4 +15,11 @@ class Application < ApplicationRecord
   def application_pet_by_pet(pet)
     ApplicationPet.where(pet_id: pet.id, application_id: id).first
   end
+
+  def all_accepted?
+    application_pets.reload
+    application_pets.all? do |application_pet|
+      application_pet.status == "Accepted"
+    end
+  end
 end
