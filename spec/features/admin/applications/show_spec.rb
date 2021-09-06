@@ -107,23 +107,28 @@ RSpec.describe 'the admin applications show page' do
       end
 
       expect(page).to have_content("Application Status: Approved")
-      save_and_open_page
+    end
+  end
+
+  context 'when any pets are rejected on an admin show page' do
+    it 'changes the app status to Rejected' do
+      visit "/admin/applications/#{@app_1.id}"
+
+      within "#pet-#{@pet_1.id}" do
+        click_button("Approve")
+      end
+
+      expect(page).to have_content("Application Status: Pending")
+
+      within "#pet-#{@pet_4.id}" do
+        click_button("Reject")
+      end
+
+      expect(page).to have_content("Application Status: Rejected")
     end
   end
 end
 
-
-#
-# One or More Pets Rejected on an Application
-#
-# As a visitor
-# When I visit an admin application show page
-# And I reject one or more pets for the application
-# And I approve all other pets on the application
-# Then I am taken back to the admin application show page
-# And I see the application's status has changed to "Rejected"
-#
-#
 # [ ] done
 #
 # Application Approval makes Pets not adoptable
