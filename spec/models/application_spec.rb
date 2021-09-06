@@ -29,5 +29,11 @@ RSpec.describe Application, type: :model do
         expect(@app_1.full_address).to eq("123 Some Street, Chicago, IL 12345")
       end
     end
+
+    describe '.approve_pet(pet)' do
+      it 'updates the pet status to Accepted' do
+        expect(@app_1.application_pet_by_pet(@pet_1)).to eq(@app_pet_1)
+      end
+    end
   end
 end

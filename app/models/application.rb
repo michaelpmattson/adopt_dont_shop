@@ -11,4 +11,8 @@ class Application < ApplicationRecord
   def full_address
     "#{address}, #{city}, #{state} #{zip}"
   end
+
+  def application_pet_by_pet(pet)
+    ApplicationPet.where(pet_id: pet.id, application_id: id).first
+  end
 end
