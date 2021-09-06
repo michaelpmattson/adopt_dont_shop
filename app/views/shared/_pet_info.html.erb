@@ -1,0 +1,17 @@
+<h3><%= pet.name %></h3>
+<p>Age: <%= pet.age %></p>
+<p>Breed: <%= pet.breed %></p>
+<p>Adoptable: <%= pet.adoptable %></p>
+
+<% if show_shelter && pet.adoptable %>
+  <p><%= pet.name %> can be adopted from <%= pet.shelter_name %>!</p>
+<% end %>
+
+<% if links %>
+  <%= link_to "Edit #{pet.name}", "/pets/#{pet.id}/edit" %>
+  <%= link_to "Delete #{pet.name}", "/pets/#{pet.id}", method: :delete %>
+<% end %>
+
+<% if adopt_button %>
+  <%= button_to "Adopt this Pet", "/applications/#{@application.id}/pets/#{pet.id}", method: :post %>
+<% end %>

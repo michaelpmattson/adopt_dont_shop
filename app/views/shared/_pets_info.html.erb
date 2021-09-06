@@ -1,0 +1,5 @@
+<% instance_var&.each do |pet| %>
+  <section id="pet-<%= pet.id %>">
+    <%= render partial: "shared/pet_info", locals: { pet: pet, show_shelter: show_shelter, links: links, adopt_button: adopt_button } %>
+  </section>
+<% end %>

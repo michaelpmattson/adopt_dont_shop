@@ -1,8 +1,1 @@
-<h1><%= @pet.name %></h1>
-<h3>Age: <%= @pet.age %> years old</h3>
-<h3>Breed: <%= @pet.breed %></h3>
-<h3>Adoptable: <%= @pet.adoptable %></h3>
-<h3>Shelter name: <%= @pet.shelter_name %></h3>
-
-<p><%= link_to "Update #{@pet.name}", "pets/#{@pet.id}/edit" %></p>
-<p><%= link_to "Delete #{@pet.name}", "/pets/#{@pet.id}", method: :delete %></p>
+<%= render partial: "shared/pet_info", locals: { pet: @pet, show_shelter: true, links: true, adopt_button: false } %>

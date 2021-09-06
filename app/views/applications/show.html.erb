@@ -9,16 +9,7 @@
   <% end %>
 <% end %>
 
-<% @pets&.each do |pet| %>
-  <section id="pet-<%= pet.id %>">
-    <h3><%= pet.name %></h3>
-    <p>Age: <%= pet.age %></p>
-    <p>Breed: <%= pet.breed %></p>
-    <p>Adoptable: </p>
-    <p>You can find <%= pet.name %> at <%= pet.shelter_name %>!</p>
-    <%= button_to "Adopt this Pet", "/applications/#{@application.id}/pets/#{pet.id}", method: :post %>
-  </section>
-<% end %>
+<%= render partial: "shared/pets_info", locals: { instance_var: @pets, show_shelter: false, links: false, adopt_button: true } %>
 
 <% if @application.status == "In Progress" && @application.pets != [] %>
   <section id="submit-app" >
