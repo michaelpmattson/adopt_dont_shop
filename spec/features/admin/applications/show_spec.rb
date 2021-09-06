@@ -18,6 +18,8 @@ RSpec.describe 'the admin applications show page' do
     @application_pet_2 = ApplicationPet.create!(pet: @pet_4, application: @app_1)
     @application_pet_3 = ApplicationPet.create!(pet: @pet_3, application: @app_2)
 
+    @application_pet_4 = ApplicationPet.create!(pet: @pet_1, application: @app_2)
+
     @app_1.update(status: "Pending")
     @app_2.update(status: "Pending")
   end
@@ -59,25 +61,34 @@ RSpec.describe 'the admin applications show page' do
       expect(page).to have_button("Reject")
     end
   end
+
+  it 'does not affect other apps if i approve a pet' do
+    visit "/admin/applications/#{@app_1.id}"
+
+    within "#pet-#{@pet_1.id}" do
+      click_button("Approve")
+    end
+
+    visit "/admin/applications/#{@app_2.id}"
+
+    within "#pet-#{@pet_1.id}" do
+      expect(page).to have_button("Approve")
+      expect(page).to have_button("Reject")
+    end
+  end
+
+  it 'does not affect other apps if i reject a pet' do
+    visit "/admin/applications/#{@app_1.id}"
+
+    within "#pet-#{@pet_1.id}" do
+      click_button("Reject")
+    end
+
+    visit "/admin/applications/#{@app_2.id}"
+
+    within "#pet-#{@pet_1.id}" do
+      expect(page).to have_button("Approve")
+      expect(page).to have_button("Reject")
+    end
+  end
 end
-
-
-# Rejecting a Pet for Adoption
-#
-# As a visitor
-# When I visit an admin application show page ('/admin/applications/:id')
-# For every pet that the application is for, I see a button to reject the application for that specific pet
-# When I click that button
-# Then I'm taken back to the admin application show page
-# And next to the pet that I rejected, I do not see a button to approve or reject this pet
-# And instead I see an indicator next to the pet that they have been rejected
-#
-# Approved/Rejected Pets on one Application do not affect other Applications
-#
-# As a visitor
-# When there are two applications in the system for the same pet
-# When I visit the admin application show page for one of the applications
-# And I approve or reject the pet for that application
-# When I visit the other application's admin show page
-# Then I do not see that the pet has been accepted or rejected for that application
-# And instead I see buttons to approve or reject the pet for this specific application
