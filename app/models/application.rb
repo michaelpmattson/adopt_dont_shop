@@ -29,4 +29,12 @@ class Application < ApplicationRecord
       application_pet.status == "Rejected"
     end
   end
+
+  def update_adoptable_pets!
+    if status == "Approved"
+      pets.each do |pet|
+        pet.update(adoptable: false)
+      end
+    end
+  end
 end
