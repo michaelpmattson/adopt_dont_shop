@@ -305,7 +305,7 @@ And I see the application's status has changed to "Rejected"
 ```
 
 ```
-[ ] done
+[x] done
 
 Application Approval makes Pets not adoptable
 
