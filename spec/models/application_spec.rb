@@ -52,5 +52,19 @@ RSpec.describe Application, type: :model do
         expect(@app_1.all_accepted?).to eq(true)
       end
     end
+
+    describe '.any_rejected?' do
+      it 'checks if all pets are accepted' do
+        expect(@app_1.any_rejected?).to eq(false)
+
+        @app_pet_1.update(status: "Accepted")
+
+        expect(@app_1.any_rejected?).to eq(false)
+
+        @app_pet_2.update(status: "Rejected")
+
+        expect(@app_1.any_rejected?).to eq(true)
+      end
+    end
   end
 end
