@@ -1,0 +1,12 @@
+<% @application.pets.each do |pet| %>
+  <section id="pet-<%= pet.id %>">
+    <%= pet.name %>
+    <% pet.application_pets.each do |app_pet| %>
+      <% if app_pet.application_id == @application.id && app_pet.status == "Accepted" %>
+        <p>Approved</p>
+      <% else %>
+        <%= button_to "Approve", "/admin/applications/#{@application.id}", params: {pet_id: pet.id}, method: :patch %>
+      <% end %>
+    <% end %>
+  </section>
+<% end %>
