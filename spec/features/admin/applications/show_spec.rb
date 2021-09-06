@@ -16,8 +16,8 @@ RSpec.describe 'the admin applications show page' do
 
     @application_pet_1 = ApplicationPet.create!(pet: @pet_1, application: @app_1)
     @application_pet_2 = ApplicationPet.create!(pet: @pet_4, application: @app_1)
-    @application_pet_3 = ApplicationPet.create!(pet: @pet_3, application: @app_2)
 
+    @application_pet_3 = ApplicationPet.create!(pet: @pet_3, application: @app_2)
     @application_pet_4 = ApplicationPet.create!(pet: @pet_1, application: @app_2)
 
     @app_1.update(status: "Pending")
@@ -91,4 +91,55 @@ RSpec.describe 'the admin applications show page' do
       expect(page).to have_button("Reject")
     end
   end
+
+  context 'when all pets are approved on an admin show page' do
+    it 'changes the app status to Approved' do
+      visit "/admin/applications/#{@app_1.id}"
+
+      within "#pet-#{@pet_1.id}" do
+        click_button("Approve")
+      end
+
+      expect(page).to have_content("Application Status: Pending")
+
+      within "#pet-#{@pet_4.id}" do
+        click_button("Approve")
+      end
+
+      expect(page).to have_content("Application Status: Approved")
+      # save_and_open_page
+    end
+  end
 end
+
+
+# All Pets Accepted on an Application
+#
+# As a visitor
+# When I visit an admin application show page
+# And I approve all pets for an application
+# Then I am taken back to the admin application show page
+# And I see the application's status has changed to "Approved"
+#
+#
+# [ ] done
+#
+# One or More Pets Rejected on an Application
+#
+# As a visitor
+# When I visit an admin application show page
+# And I reject one or more pets for the application
+# And I approve all other pets on the application
+# Then I am taken back to the admin application show page
+# And I see the application's status has changed to "Rejected"
+#
+#
+# [ ] done
+#
+# Application Approval makes Pets not adoptable
+#
+# As a visitor
+# When I visit an admin application show page
+# And I approve all pets on the application
+# And when I visit the show pages for those pets
+# Then I see that those pets are no longer "adoptable"
