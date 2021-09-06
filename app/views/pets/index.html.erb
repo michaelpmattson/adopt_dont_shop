@@ -1,9 +1,9 @@
 <h1>All pets</h1>
 
 <%= form_with url: "/pets", method: :get, local: true do |f| %>
-  <%= f.label :search %>
+  <%= f.label      :search %>
   <%= f.text_field :search %>
-  <%= f.submit "Search" %>
+  <%= f.submit     "Search" %>
 <% end %>
 
 <% @pets.each do |pet| %>
