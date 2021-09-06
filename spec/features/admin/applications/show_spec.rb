@@ -6,7 +6,7 @@ RSpec.describe 'the admin applications show page' do
     @shelter_2 = Shelter.create(name: 'RGV animal shelter', city: 'Harlingen, TX', foster_program: false, rank: 5)
     @shelter_3 = Shelter.create(name: 'Fancy pets of Colorado', city: 'Denver, CO', foster_program: true, rank: 10)
 
-    @pet_1 = @shelter_1.pets.create(name: 'Mr. Pirate', breed: 'tuxedo shorthair', age: 5, adoptable: false)
+    @pet_1 = @shelter_1.pets.create(name: 'Mr. Pirate', breed: 'tuxedo shorthair', age: 5, adoptable: true)
     @pet_2 = @shelter_1.pets.create(name: 'Clawdia', breed: 'shorthair', age: 3, adoptable: true)
     @pet_3 = @shelter_3.pets.create(name: 'Lucille Bald', breed: 'sphynx', age: 8, adoptable: true)
     @pet_4 = @shelter_1.pets.create(name: 'Ann', breed: 'ragdoll', age: 5, adoptable: true)
@@ -127,14 +127,31 @@ RSpec.describe 'the admin applications show page' do
       expect(page).to have_content("Application Status: Rejected")
     end
   end
-end
 
-# [ ] done
-#
-# Application Approval makes Pets not adoptable
-#
-# As a visitor
-# When I visit an admin application show page
-# And I approve all pets on the application
-# And when I visit the show pages for those pets
-# Then I see that those pets are no longer "adoptable"
+  context 'when all pets on an app are approved' do
+    it 'makes those pets not adoptable on their show pages' do
+      visit "/pets/#{@pet_1.id}"
+      save_and_open_page
+      expect(page).to have_content("Adoptable: true")
+      visit "/pets/#{@pet_4.id}"
+      expect(page).to have_content("Adoptable: true")
+
+      visit "/admin/applications/#{@app_1.id}"
+
+      within "#pet-#{@pet_1.id}" do
+        click_button("Approve")
+      end
+      within "#pet-#{@pet_4.id}" do
+        click_button("Approve")
+      end
+
+      visit "/pets/#{@pet_1.id}"
+      expect(page).to_not have_content("Adoptable: true")
+      expect(page).to     have_content("Adoptable: false")
+
+      visit "/pets/#{@pet_4.id}"
+      expect(page).to_not have_content("Adoptable: true")
+      expect(page).to     have_content("Adoptable: false")
+    end
+  end
+end
