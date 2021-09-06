@@ -107,22 +107,12 @@ RSpec.describe 'the admin applications show page' do
       end
 
       expect(page).to have_content("Application Status: Approved")
-      # save_and_open_page
+      save_and_open_page
     end
   end
 end
 
 
-# All Pets Accepted on an Application
-#
-# As a visitor
-# When I visit an admin application show page
-# And I approve all pets for an application
-# Then I am taken back to the admin application show page
-# And I see the application's status has changed to "Approved"
-#
-#
-# [ ] done
 #
 # One or More Pets Rejected on an Application
 #

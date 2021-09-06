@@ -1,6 +1,7 @@
 class Admin::ApplicationsController < ApplicationController
   def show
     @application = Application.find(params[:id])
+
   end
 
   def update
@@ -12,6 +13,11 @@ class Admin::ApplicationsController < ApplicationController
     elsif params[:approved] == 'false'
       application_pet.update(status: "Rejected")
     end
+
+    if application.all_accepted?
+      application.update(status: "Approved")
+    end
+
     redirect_to("/admin/applications/#{application.id}")
   end
 end
