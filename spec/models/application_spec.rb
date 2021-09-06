@@ -66,5 +66,19 @@ RSpec.describe Application, type: :model do
         expect(@app_1.any_rejected?).to eq(true)
       end
     end
+
+    describe '.update_adoptable_pets!' do
+      it 'updates adoptable to false if an app is approved' do
+        allow(@app_1).to receive(:status).and_return("Approved")
+
+        @app_1.update_adoptable_pets!
+
+        @pet_1.reload
+        @pet_2.reload
+        
+        expect(@pet_1.adoptable).to eq(false)
+        expect(@pet_2.adoptable).to eq(false)
+      end
+    end
   end
 end

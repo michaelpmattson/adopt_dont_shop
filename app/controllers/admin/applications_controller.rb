@@ -16,6 +16,7 @@ class Admin::ApplicationsController < ApplicationController
 
     if application.all_accepted?
       application.update(status: "Approved")
+      application.update_adoptable_pets!
     elsif application.any_rejected?
       application.update(status: "Rejected")
     end
