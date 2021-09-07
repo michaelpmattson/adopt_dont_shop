@@ -335,7 +335,7 @@ And I do see a button to reject them
 These stories emphasize SQL and ActiveRecord concepts.
 
 ```
-[ ] done
+[x] done
 
 SQL Only Story
 
