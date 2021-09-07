@@ -65,6 +65,12 @@ RSpec.describe Shelter, type: :model do
         expect(Shelter.pending_shelters).to eq([@shelter_1, @shelter_3])
       end
     end
+
+    describe '#get_info(id)' do
+      it 'returns name and address using sql' do
+        expect(Shelter.get_info(@shelter_1.id)).to eq({name: 'Aurora shelter', city: 'Aurora, CO'})
+      end
+    end
   end
 
   describe 'instance methods' do

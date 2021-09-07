@@ -24,6 +24,11 @@ class Shelter < ApplicationRecord
     joins(pets: :applications).where('applications.status = ?', "Pending").distinct.order(:name)
   end
 
+  def self.get_info(id)
+    shelter = find_by_sql("SELECT name, city FROM shelters WHERE id = #{id}").first
+    {name: shelter[:name], city: shelter[:city]}
+  end
+
   def pet_count
     pets.count
   end
