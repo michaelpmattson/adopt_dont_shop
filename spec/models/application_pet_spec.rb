@@ -18,7 +18,7 @@ RSpec.describe ApplicationPet, type: :model do
   end
 
   describe '.instance_methods' do
-    describe '.update_status!' do
+    describe '.update_status!(approved)' do
       it 'changes to Accepted or Rejected' do
         approved = "true"
         @app_pet_1.update_status!(approved)
