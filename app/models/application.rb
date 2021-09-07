@@ -37,4 +37,13 @@ class Application < ApplicationRecord
       end
     end
   end
+
+  def update_status!
+    if all_accepted?
+      update(status: "Approved")
+      update_adoptable_pets!
+    elsif any_rejected?
+      update(status: "Rejected")
+    end
+  end
 end
