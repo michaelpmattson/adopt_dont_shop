@@ -166,7 +166,7 @@ RSpec.describe 'the admin applications show page' do
       end
 
       visit "/admin/applications/#{@app_2.id}"
-save_and_open_page
+
       within "#pet-#{@pet_1.id}" do
         expect(page).to_not have_button("Approve")
         expect(page).to     have_button("Reject")

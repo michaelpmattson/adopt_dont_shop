@@ -75,9 +75,26 @@ RSpec.describe Application, type: :model do
 
         @pet_1.reload
         @pet_2.reload
-        
+
         expect(@pet_1.adoptable).to eq(false)
         expect(@pet_2.adoptable).to eq(false)
+      end
+    end
+
+    describe '.instance_methods' do
+      describe '.update_status!' do
+        it 'changes to Approved or Rejected' do
+          allow(@app_1).to receive(:all_accepted?).and_return(true)
+          @app_1.update_status!
+
+          expect(@app_1.status).to eq("Approved")
+
+          allow(@app_1).to receive(:all_accepted?).and_return(false)
+          allow(@app_1).to receive(:any_rejected?).and_return(true)
+          @app_1.update_status!
+
+          expect(@app_1.status).to eq("Rejected")
+        end
       end
     end
   end
