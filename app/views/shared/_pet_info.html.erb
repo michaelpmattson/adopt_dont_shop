@@ -13,5 +13,5 @@
 <% end %>
 
 <% if adopt_button %>
-  <%= button_to "Adopt this Pet", "/applications/#{@application.id}/pets/#{pet.id}", method: :post %>
+  <%= button_to "Adopt this Pet", "/applications/#{@application.id}/pets", params: {pet_id: pet.id}, method: :post %>
 <% end %>
