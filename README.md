@@ -366,7 +366,7 @@ Then I see all those shelters are listed alphabetically
 ```
 
 ```
-[ ] done
+[x] done
 
 Admin Shelters Show Page Links
 
@@ -378,7 +378,7 @@ Then I am taken to that shelter's admin show page
 ```
 
 ```
-[ ] done
+[x] done
 
 Average Pet Age
 
