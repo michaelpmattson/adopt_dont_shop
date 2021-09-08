@@ -37,4 +37,37 @@ RSpec.describe 'the admin shelters index' do
       expect(page).to have_content(@shelter_1.name)
     end
   end
+
+  it 'links to each admin show page from shelter names' do
+    visit '/admin/shelters'
+    within "#all-shelters" do
+      click_link("Aurora shelter")
+    end
+    expect(current_path).to eq("/admin/shelters/#{@shelter_1.id}")
+
+    visit '/admin/shelters'
+    within "#all-shelters" do
+      click_link("RGV animal shelter")
+    end
+    expect(current_path).to eq("/admin/shelters/#{@shelter_2.id}")
+
+    visit '/admin/shelters'
+    within "#all-shelters" do
+      click_link("Fancy pets of Colorado")
+    end
+    expect(current_path).to eq("/admin/shelters/#{@shelter_3.id}")
+
+
+    visit '/admin/shelters'
+    within "#pending-shelters" do
+      click_link("Aurora shelter")
+    end
+    expect(current_path).to eq("/admin/shelters/#{@shelter_1.id}")
+
+    visit '/admin/shelters'
+    within "#pending-shelters" do
+      click_link("Fancy pets of Colorado")
+    end
+    expect(current_path).to eq("/admin/shelters/#{@shelter_3.id}")
+  end
 end
