@@ -25,8 +25,8 @@ class Shelter < ApplicationRecord
     joins(:applications).where(applications: { status: "Pending" }).order(Arel.sql('LOWER(shelters.name)'))
   end
 
-  def self.get_info(id)
-    shelter = find_by_sql("SELECT name, city FROM shelters WHERE id = #{id}").first
+  def get_info
+    shelter = Shelter.find_by_sql("SELECT name, city FROM shelters WHERE id = #{id}").first
     {name: shelter[:name], city: shelter[:city]}
   end
 
@@ -44,5 +44,10 @@ class Shelter < ApplicationRecord
 
   def shelter_pets_filtered_by_age(age_filter)
     adoptable_pets.where('age >= ?', age_filter)
+  end
+
+  def average_age
+    avg = Pet.joins(:shelter).where(shelter_id: "#{id}").average(:age)
+    avg.to_f.round(2)
   end
 end

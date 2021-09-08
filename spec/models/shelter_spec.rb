@@ -83,15 +83,15 @@ RSpec.describe Shelter, type: :model do
         expect(Shelter.pending_shelters).to eq([@shelter_1, @shelter_3, @shelter_2])
       end
     end
-
-    describe '#get_info(id)' do
-      it 'returns name and address using sql' do
-        expect(Shelter.get_info(@shelter_1.id)).to eq({name: 'Aurora shelter', city: 'Aurora, CO'})
-      end
-    end
   end
 
   describe 'instance methods' do
+    describe '.get_info(id)' do
+      it 'returns name and address using sql' do
+        expect(@shelter_1.get_info).to eq({name: 'Aurora shelter', city: 'Aurora, CO'})
+      end
+    end
+
     describe '.adoptable_pets' do
       it 'only returns pets that are adoptable' do
         expect(@shelter_1.adoptable_pets).to eq([@pet_2, @pet_4])
@@ -113,6 +113,12 @@ RSpec.describe Shelter, type: :model do
     describe '.pet_count' do
       it 'returns the number of pets at the given shelter' do
         expect(@shelter_1.pet_count).to eq(3)
+      end
+    end
+
+    describe '.average_age' do
+      it 'gives average age of pets in a shelter' do
+        expect(@shelter_1.average_age).to eq(4.33)
       end
     end
   end
