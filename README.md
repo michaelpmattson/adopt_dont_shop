@@ -355,7 +355,7 @@ NOTE: Your query should only return the necessary data to complete the story
 For the following stories, you should fully leverage ActiveRecord methods in your queries.
 
 ```
-[ ] done
+[x] done
 
 Shelters with Pending Applications Listed Alphabetically
 
