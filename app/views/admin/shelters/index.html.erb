@@ -2,7 +2,7 @@
   <h3>Shelters with Pending Applications:</h3>
   <ul>
     <% @pending_shelters.each do |shelter| %>
-      <li><%= shelter.name %></li>
+      <li><%= link_to shelter.name, "/admin/shelters/#{shelter.id}" %></li>
     <% end %>
   </ul>
 </section>
@@ -11,7 +11,7 @@
   <h3>All shelters:</h3>
   <ul>
     <% @shelters.each do |shelter| %>
-    <li><%= shelter.name %></li>
+    <li><%= link_to shelter.name, "/admin/shelters/#{shelter.id}" %></li>
     <% end %>
   </ul>
 </section>
