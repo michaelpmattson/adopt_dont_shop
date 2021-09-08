@@ -22,7 +22,7 @@ class Shelter < ApplicationRecord
   end
 
   def self.pending_shelters
-    joins(:applications).where(applications: { status: "Pending" }).order(:name)
+    joins(:applications).where(applications: { status: "Pending" }).order(Arel.sql('LOWER(shelters.name)'))
   end
 
   def self.get_info(id)

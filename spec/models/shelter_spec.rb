@@ -20,7 +20,9 @@ RSpec.describe Shelter, type: :model do
     @pet_1 = @shelter_1.pets.create(name: 'Mr. Pirate', breed: 'tuxedo shorthair', age: 5, adoptable: false)
     @pet_2 = @shelter_1.pets.create(name: 'Clawdia', breed: 'shorthair', age: 3, adoptable: true)
     @pet_3 = @shelter_3.pets.create(name: 'Lucille Bald', breed: 'sphynx', age: 8, adoptable: true)
+    @pet_6 = @shelter_3.pets.create(name: 'Lulu', breed: 'sphynx', age: 3, adoptable: true)
     @pet_4 = @shelter_1.pets.create(name: 'Ann', breed: 'ragdoll', age: 5, adoptable: true)
+    @pet_5 = @shelter_2.pets.create(name: 'Bobo', breed: 'tabby', age: 2, adoptable: true)
   end
 
   describe 'class methods' do
@@ -63,6 +65,22 @@ RSpec.describe Shelter, type: :model do
 
         app_2.update(status: "Pending")
         expect(Shelter.pending_shelters).to eq([@shelter_1, @shelter_3])
+      end
+
+      it 'shelters are alphabetically sorted' do
+        app_1 = Application.create!(name: "Cindy Lou Who", address: "123 Some Street", city: "Whoville", state: "WI", zip: "12345", description: "I'm a who for crying out loud.")
+        app_2 = Application.create!(name: "The Grinch", address: "2376 Mountaintop Drive", city: "Whoville", state: "WI", zip: "12345")
+        app_3 = Application.create!(name: "Horton", address: "7874 Hickory Lane", city: "Whoknows", state: "MA", zip: "48943")
+
+        app_3.pets << @pet_5 # 2 RGV animal shelter
+        app_1.pets << @pet_1 # 1 Aurora shelter
+        app_2.pets << @pet_3 # 3 fancy pets of Colorado
+
+        app_1.update(status: "Pending")
+        app_2.update(status: "Pending")
+        app_3.update(status: "Pending")
+
+        expect(Shelter.pending_shelters).to eq([@shelter_1, @shelter_3, @shelter_2])
       end
     end
 
